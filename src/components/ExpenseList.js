@@ -1,6 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ExpenseList = ({ expenses, deleteExpense }) => {
+
+    const [total, setTotal] = useState(0);
+
+    const calTotal = (expenses) => {
+        let totalAmount = 0;
+        for (const expense of expenses) {
+            totalAmount += expense.amount;
+        }
+        return totalAmount;
+    };
+
+    useEffect (() => {
+        setTotal(calTotal(expenses));
+    }, [expenses]);
+
     return (
         <div>
             <h2>Expense List</h2>
@@ -13,7 +28,8 @@ const ExpenseList = ({ expenses, deleteExpense }) => {
                 ))
             ) : (
                 <p>내역이 없습니다.</p>
-            )}
+            )}            
+            <h3 style={{color: 'red'}}>Total : {calTotal(expenses)}</h3>
         </div>
     );
 };
